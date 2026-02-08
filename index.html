@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GJP Neon Runner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hud-bar">
+      <h1>GJP Neon Runner</h1>
+      <div class="hud-stats">
+        <span>Score: <strong id="scoreValue">0</strong></span>
+        <span>Tokens: <strong id="tokenValue">0</strong></span>
+        <span>High: <strong id="highScoreValue">0</strong></span>
+      </div>
+      <div class="hud-controls">
+        <button id="muteButton" type="button" aria-label="Toggle sound">🔊 Sound</button>
+        <button id="debugButton" type="button" aria-label="Toggle debug overlay">🐞 Debug</button>
+      </div>
+    </header>
+
+    <main class="game-frame">
+      <canvas id="gameCanvas" width="960" height="540" aria-label="GJP Neon Runner game canvas"></canvas>
+
+      <div id="startMenu" class="overlay visible" role="dialog" aria-labelledby="startTitle">
+        <h2 id="startTitle">Welcome to GJP Neon Runner</h2>
+        <p>Run forever, dodge neon hazards, and grab glowing GJP tokens.</p>
+        <p class="overlay-controls">Jump: Space / W / ↑ • Slide: S / ↓ • Pause: P • Restart: R</p>
+        <button id="startButton" type="button">Start Run</button>
+      </div>
+
+      <div id="pauseMenu" class="overlay" role="dialog" aria-labelledby="pauseTitle">
+        <h2 id="pauseTitle">Paused</h2>
+        <p>Press P to continue your run.</p>
+        <button id="resumeButton" type="button">Resume</button>
+      </div>
+
+      <div id="gameOverMenu" class="overlay" role="dialog" aria-labelledby="gameOverTitle">
+        <h2 id="gameOverTitle">Game Over</h2>
+        <p id="finalScore">Score: 0</p>
+        <p id="finalTokens">Tokens: 0</p>
+        <button id="restartButton" type="button">Restart</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
