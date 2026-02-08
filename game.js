@@ -140,8 +140,7 @@
 
       this.spawnTimer = 0;
       this.tokenTimer = 3;
-      this.spawnInterval = 1.4;
-      this.minSpawnInterval = 0.8;
+      this.spawnInterval = 1.35;
 
       this.bgLayers = [
         { speed: 35, color: "#111835", offset: 0, bars: 16, heightMin: 40, heightMax: 120 },
@@ -250,7 +249,7 @@
       this.speed = this.baseSpeed;
       this.spawnTimer = 0;
       this.tokenTimer = 2.5;
-      this.spawnInterval = 1.4;
+      this.spawnInterval = 1.35;
       this.player.y = GROUND_Y - this.player.defaultHeight;
       this.player.height = this.player.defaultHeight;
       this.player.vy = 0;
@@ -307,7 +306,7 @@
       if (this.state !== "running") return;
       if (this.player.jumping) return;
       this.player.sliding = true;
-      this.player.slideTimer = 0.65;
+      this.player.slideTimer = 0.5;
       this.player.height = this.player.slideHeight;
       this.player.y = GROUND_Y - this.player.height;
     }
@@ -318,16 +317,14 @@
 
       const tallChance = Math.random();
       obstacle.active = true;
-      obstacle.width = 40 + Math.random() * 24;
+      obstacle.width = 36 + Math.random() * 34;
 
-      if (tallChance > 0.7) {
-        obstacle.height = 58 + Math.random() * 30;
-        const clearance = this.player.slideHeight + 36;
-        const bottomY = GROUND_Y - clearance;
-        obstacle.y = bottomY - obstacle.height;
+      if (tallChance > 0.72) {
+        obstacle.height = 90 + Math.random() * 55;
+        obstacle.y = GROUND_Y - obstacle.height - 30;
         obstacle.type = "hanging";
       } else {
-        obstacle.height = 38 + Math.random() * 28;
+        obstacle.height = 40 + Math.random() * 72;
         obstacle.y = GROUND_Y - obstacle.height;
         obstacle.type = "ground";
       }
@@ -348,44 +345,15 @@
       return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
     }
 
-    canLandOnTop(obstacle, previousBottom, currentBottom) {
-      if (obstacle.type !== "ground") return false;
-      const playerLeft = this.player.x;
-      const playerRight = this.player.x + this.player.width;
-      const obstacleLeft = obstacle.x;
-      const obstacleRight = obstacle.x + obstacle.width;
-      const horizontalOverlap = playerRight > obstacleLeft + 4 && playerLeft < obstacleRight - 4;
-      const crossedTop = previousBottom <= obstacle.y + 8 && currentBottom >= obstacle.y;
-      return horizontalOverlap && crossedTop && this.player.vy >= 0;
-    }
-
-    obstacleCollision(obstacle, previousBottom) {
-      const playerBottom = this.player.y + this.player.height;
-      if (this.canLandOnTop(obstacle, previousBottom, playerBottom)) {
-        this.player.y = obstacle.y - this.player.height;
-        this.player.vy = 0;
-        this.player.jumping = false;
-        return false;
-      }
-
-      return this.intersects(this.player, obstacle);
-    }
-
-    getSpawnDelay() {
-      const minGapSeconds = Math.max(0.65, (this.player.width + 180) / this.speed);
-      const randomized = this.spawnInterval * (0.9 + Math.random() * 0.35);
-      return Math.max(minGapSeconds, randomized);
-    }
-
     update(dt) {
       this.speed = Math.min(this.maxSpeed, this.speed + 6 * dt);
       this.distance += this.speed * dt;
       this.score = Math.floor(this.distance / 8) + this.tokens * 75;
 
-      this.spawnInterval = Math.max(this.minSpawnInterval, this.spawnInterval - 0.005 * dt);
+      this.spawnInterval = Math.max(0.55, this.spawnInterval - 0.008 * dt);
       this.spawnTimer -= dt;
       if (this.spawnTimer <= 0) {
-        this.spawnTimer = this.getSpawnDelay();
+        this.spawnTimer = this.spawnInterval * (0.86 + Math.random() * 0.45);
         this.spawnObstacle();
       }
 
@@ -395,7 +363,6 @@
         if (Math.random() > 0.35) this.spawnToken();
       }
 
-      const previousBottom = this.player.y + this.player.height;
       this.player.vy += this.gravity * dt;
       this.player.y += this.player.vy * dt;
 
@@ -430,7 +397,7 @@
           return;
         }
 
-        if (this.obstacleCollision(obstacle, previousBottom)) {
+        if (this.intersects(this.player, obstacle)) {
           this.gameOver();
         }
       });
@@ -514,9 +481,9 @@
       const { ctx } = this;
       this.obstacles.activeItems().forEach((obstacle) => {
         ctx.save();
-        ctx.shadowColor = obstacle.type === "hanging" ? "#ff1f4d" : "#ff9a3c";
+        ctx.shadowColor = obstacle.type === "hanging" ? "#ff43c7" : "#ff8e4a";
         ctx.shadowBlur = 14;
-        ctx.fillStyle = obstacle.type === "hanging" ? "#ff2b3a" : "#ff8a2f";
+        ctx.fillStyle = obstacle.type === "hanging" ? "#be40d8" : "#ff5f48";
         ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         ctx.restore();
       });

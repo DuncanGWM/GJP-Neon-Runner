@@ -5,8 +5,7 @@ GJP Neon Runner is a polished, neon-themed endless runner built with **vanilla H
 ## Features
 
 - Endless side-scrolling gameplay with increasing speed/difficulty
-- Procedural obstacle spawning with fairness tuning (reachable jump/slide windows)
-- Landing on top of ground obstacles is treated as a safe platform contact
+- Procedural obstacle spawning
 - Collectible glowing **GJP tokens** for bonus points
 - Start menu, pause menu, and game over screen
 - Local high-score persistence via `localStorage`
