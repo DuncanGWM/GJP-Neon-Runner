@@ -1,0 +1,143 @@
+:root {
+  color-scheme: dark;
+  --bg-1: #070913;
+  --bg-2: #121b35;
+  --neon-cyan: #33f3ff;
+  --neon-pink: #ff43c7;
+  --neon-violet: #8f6cff;
+  --text: #e9faff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at 50% 30%, #1f2d52, var(--bg-1) 65%);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.app-shell {
+  width: min(100%, 1080px);
+}
+
+.hud-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border: 1px solid rgba(51, 243, 255, 0.35);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(13, 18, 37, 0.96), rgba(16, 26, 57, 0.8));
+  box-shadow: 0 0 18px rgba(51, 243, 255, 0.22);
+}
+
+.hud-bar h1 {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.hud-stats,
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hud-stats span {
+  background: rgba(6, 14, 34, 0.66);
+  border: 1px solid rgba(143, 108, 255, 0.5);
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-size: 0.9rem;
+}
+
+button {
+  border: 1px solid rgba(51, 243, 255, 0.8);
+  background: rgba(9, 15, 35, 0.9);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover,
+button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(51, 243, 255, 0.6);
+}
+
+.game-frame {
+  position: relative;
+  border: 1px solid rgba(143, 108, 255, 0.45);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #050710;
+  box-shadow: 0 0 24px rgba(143, 108, 255, 0.2);
+}
+
+#gameCanvas {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  touch-action: manipulation;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 24px;
+  background: linear-gradient(rgba(3, 6, 16, 0.66), rgba(9, 14, 29, 0.85));
+  backdrop-filter: blur(2px);
+}
+
+.overlay.visible {
+  display: flex;
+}
+
+.overlay h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 14px var(--neon-pink);
+}
+
+.overlay-controls {
+  color: #bcd2ff;
+  max-width: 42ch;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding: 10px;
+  }
+
+  .hud-bar {
+    padding: 10px;
+  }
+
+  .hud-stats span {
+    font-size: 0.8rem;
+  }
+}
